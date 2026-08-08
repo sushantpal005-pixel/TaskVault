@@ -78,13 +78,29 @@ export const login = async (req, res) => {
         }).json({
             message: "Login successful",
             success: true,
-            user
+            _id: user._id,
+            fullname:user.fullName,
+            email:user.email,
         })
     } catch (error) {
         console.log(error)
         res.status(500).json({
             message: "Failed to Login",
             success: false
+        })
+    }
+}
+
+export const logout = async (req, res) => {
+    try {
+        return res.status(200).cookie(token, "", {maxAge :'0'}).json({
+            message: "Logout successfully",
+            success: true
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({
+            message: "Logut failed"
         })
     }
 }

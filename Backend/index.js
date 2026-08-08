@@ -1,7 +1,7 @@
 import express from 'express'
 import dotenv from "dotenv"
 import userRoute from "./Routes/userRoute.js"
-import connectDB from './config/db.js'
+import connectDB from './Config/db.js'
 import cookieParser from 'cookie-parser'
 
 dotenv.config({})
