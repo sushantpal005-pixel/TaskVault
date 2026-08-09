@@ -1,5 +1,5 @@
 import mongoose from "mongoose"
-import { User } from "./userModel"
+//import { User } from "./userModel.js"
 
 const todoModel = mongoose.Schema({
     title: {
@@ -8,12 +8,10 @@ const todoModel = mongoose.Schema({
     },
     description: {
         type: "String",
-        required: true
     },
     isCompleted: {
         type: "Boolean",
         default: false,
-        required: true
     },
     userId: {
         type: mongoose.Schema.Types.ObjectId,

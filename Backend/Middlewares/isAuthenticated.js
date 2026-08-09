@@ -1,8 +1,9 @@
 import jwt from "jsonwebtoken"
+import { User } from "../Models/userModel.js";
 
 export const isAuthenticated = async (req, res, next) => {
     try {
-        const token = req.cookie.token;
+        const token = req.cookies.token;
     if(!token){
         return res.status(401).json({
             message: "User not Authenticated",
@@ -16,7 +17,8 @@ export const isAuthenticated = async (req, res, next) => {
             success: false
         })
     }
-    req.user = decoded.userId
+    const user = await User.findById(decoded.userId).select("-password")
+    req.user = user
     next()
     } catch (error) {
         console.log(error)
