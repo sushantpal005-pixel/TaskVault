@@ -1,0 +1,31 @@
+import { Link } from "react-router-dom";
+
+const Navbar = () => {
+  return (
+    <nav className="border-b border-slate-800 bg-slate-900/80">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="h-16 flex items-center justify-between">
+
+            <Link to="/dashboard">
+              <h1 className="text-2xl font-bold">
+                Task<span className="text-indigo-500">Vault</span>
+              </h1>
+            </Link>
+
+            <div className="flex items-center gap-4">
+              <span className="hidden sm:block text-sm text-slate-400">
+                Welcome back, Sushant
+              </span>
+
+              <button className="px-4 py-2 text-sm font-medium text-slate-300 border border-slate-700 rounded-lg hover:bg-slate-800 transition">
+                Logout
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </nav>
+  )
+}
+
+export default Navbar;

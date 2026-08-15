@@ -1,0 +1,61 @@
+const TodoCard = ({ todo, onEdit }) => {
+  return (
+    <div className="p-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 hover:bg-slate-800/40 transition">
+
+      {/* Todo Info */}
+      <div className="flex items-start gap-4">
+
+        {/* Checkbox */}
+        <input
+          type="checkbox"
+          checked={todo.isCompleted}
+          readOnly
+          className="mt-1 w-5 h-5 accent-indigo-600 cursor-pointer"
+        />
+
+        {/* Title + Description */}
+        <div className="min-w-0">
+
+          <h4
+            className={`font-medium break-words ${
+              todo.isCompleted
+                ? "line-through text-slate-500"
+                : "text-white"
+            }`}
+          >
+            {todo.title}
+          </h4>
+
+          <p className="text-sm text-slate-400 mt-1 break-words">
+            {todo.description}
+          </p>
+
+        </div>
+
+      </div>
+
+      {/* Actions */}
+      <div className="flex gap-2 ml-9 sm:ml-0 shrink-0">
+
+        <button
+          type="button"
+          onClick={onEdit}
+          className="px-3 py-2 text-sm border border-slate-700 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition"
+        >
+          Edit
+        </button>
+
+        <button
+          type="button"
+          className="px-3 py-2 text-sm border border-red-900/50 rounded-lg text-red-400 hover:bg-red-950/40 transition"
+        >
+          Delete
+        </button>
+
+      </div>
+
+    </div>
+  );
+};
+
+export default TodoCard;
