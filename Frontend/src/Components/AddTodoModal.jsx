@@ -1,4 +1,32 @@
+import axios from "axios";
+import { useState } from "react";
+
 const AddTodoModal = ({ onClose }) => {
+  const [todo, SetTodo] = useState({
+    title: "",
+    description: "",
+    isCompleted: false,
+  });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(todo);
+    try {
+      const res = await axios.post(`http://localhost:8080/api/v1/todo/create`, todo, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true
+      })
+      console.log(res)
+      if(res.data.success){
+        onClose();
+      }
+    } catch (error) {
+      console.log(error)
+    }
+
+  }
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
 
@@ -51,6 +79,7 @@ const AddTodoModal = ({ onClose }) => {
               id="title"
               type="text"
               placeholder="Enter task title"
+              onChange={(e) => { SetTodo({ ...todo, title: e.target.value }) }}
               className="w-full px-4 py-3 bg-slate-950 border border-slate-700 rounded-lg text-white placeholder-slate-500 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition"
             />
           </div>
@@ -68,8 +97,34 @@ const AddTodoModal = ({ onClose }) => {
               id="description"
               rows="4"
               placeholder="Enter task description"
+              onChange={(e) => { SetTodo({ ...todo, description: e.target.value }) }}
               className="w-full px-4 py-3 bg-slate-950 border border-slate-700 rounded-lg text-white placeholder-slate-500 outline-none resize-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition"
             ></textarea>
+          </div>
+
+          {/* Completion Status */}
+          <div className="flex items-center gap-3">
+
+            <input
+              id="isCompleted"
+              type="checkbox"
+              checked={todo.isCompleted}
+              onChange={(e) =>
+                SetTodo({
+                  ...todo,
+                  isCompleted: e.target.checked,
+                })
+              }
+              className="w-5 h-5 accent-indigo-600 cursor-pointer"
+            />
+
+            <label
+              htmlFor="isCompleted"
+              className="text-sm font-medium text-slate-300 cursor-pointer"
+            >
+              Mark as completed
+            </label>
+
           </div>
 
           {/* Buttons */}
@@ -86,6 +141,7 @@ const AddTodoModal = ({ onClose }) => {
             <button
               type="submit"
               className="w-full sm:w-auto px-5 py-3 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium transition"
+              onClick={handleSubmit}
             >
               Create Task
             </button>

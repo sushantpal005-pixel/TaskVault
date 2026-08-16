@@ -8,27 +8,7 @@ import AddTodoModal from "../Components/AddTodoModal";
 import EditTodoModal from "../Components/EditTodoModal";
 
 const Dashboard = () => {
-  const [todos] = useState([
-    {
-      id: 1,
-      title: "Learn React",
-      description: "Practice React hooks and routing",
-      isCompleted: false,
-    },
-    {
-      id: 2,
-      title: "Build TaskVault",
-      description: "Complete the dashboard UI",
-      isCompleted: true,
-    },
-    {
-      id: 3,
-      title: "Practice DSA",
-      description: "Solve two binary search problems",
-      isCompleted: false,
-    },
-  ]);
-
+  const [todos] = useState([]);
   const [isAddTodoModal, setIsAddTodoModal] = useState(false)
   const [isEditTodoModal, setIsEditTodoModal] = useState(false)
   const [selectedTodo, setSelectedTodo] = useState(null)
