@@ -1,5 +1,31 @@
+import { useState } from "react";
+import { updateTodoApi } from "../Api/todoApi";
+import { useDispatch } from "react-redux";
+import { updateTodo } from "../Redux/todoSlice";
+
 const EditTodoModal = ({todo, onClose }) => {
-  return (
+  const [formData, setFormData] = useState({
+    title: todo.title,
+    description: todo.description,
+    isCompleted: todo.isCompleted
+  })
+  const dispatch = useDispatch()
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    try {
+      const res = await updateTodoApi(todo._id, formData);
+      console.log(res)
+      if(res.success){
+        dispatch(updateTodo(res.updatedTodo))
+        onClose()
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+    return (
     <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
 
       {/* Overlay */}
@@ -35,7 +61,7 @@ const EditTodoModal = ({todo, onClose }) => {
         </div>
 
         {/* Form */}
-        <form className="p-6 space-y-5">
+        <form onSubmit={handleSubmit} className="p-6 space-y-5">
 
           {/* Title */}
           <div>
@@ -49,7 +75,8 @@ const EditTodoModal = ({todo, onClose }) => {
             <input
               id="edit-title"
               type="text"
-              defaultValue={todo?.title}
+              value={formData.title}
+              onChange={(e) => {setFormData({...formData, title: e.target.value})}}
               placeholder="Enter task title"
               className="w-full px-4 py-3 bg-slate-950 border border-slate-700 rounded-lg text-white placeholder-slate-500 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition"
             />
@@ -67,7 +94,8 @@ const EditTodoModal = ({todo, onClose }) => {
             <textarea
               id="edit-description"
               rows="4"
-              defaultValue={todo?.description}
+              value={formData.description}
+              onChange={(e) => {setFormData({...formData, description: e.target.value})}}
               placeholder="Enter task description"
               className="w-full px-4 py-3 bg-slate-950 border border-slate-700 rounded-lg text-white placeholder-slate-500 outline-none resize-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition"
             />
@@ -87,7 +115,8 @@ const EditTodoModal = ({todo, onClose }) => {
               <input
                 id="edit-status"
                 type="checkbox"
-                defaultChecked={todo?.isCompleted}
+                checked={formData.isCompleted}
+                onChange={(e) => {setFormData({...formData, isCompleted: e.target.checked})}}
                 className="w-5 h-5 accent-indigo-600 cursor-pointer"
               />
 

@@ -1,4 +1,10 @@
+import { useSelector } from "react-redux";
+
 const TodoStats = () => {
+  const todos = useSelector((state) => state.todo.todos);
+  console.log(todos)
+  const completedTodos = todos.filter((todo) => todo.isCompleted);
+  const pendingTodos = todos.filter((todo) => !todo.isCompleted);
   return (
     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
 
@@ -8,7 +14,7 @@ const TodoStats = () => {
             </p>
 
             <h3 className="text-3xl font-bold mt-2">
-              5
+              {todos.length}
             </h3>
           </div>
 
@@ -18,7 +24,7 @@ const TodoStats = () => {
             </p>
 
             <h3 className="text-3xl font-bold mt-2 text-green-400">
-              3
+              {completedTodos.length}
             </h3>
           </div>
 
@@ -28,7 +34,7 @@ const TodoStats = () => {
             </p>
 
             <h3 className="text-3xl font-bold mt-2 text-yellow-400">
-              2
+              {pendingTodos.length}
             </h3>
           </div>
 

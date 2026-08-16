@@ -6,6 +6,9 @@ import Register from './Pages/Register.jsx'
 import Login from './Pages/Login.jsx'
 import Layout from './Layout.jsx'
 import Dashboard from './Pages/DashBoard.jsx'
+import { store } from './Redux/store.js'
+import { Provider } from "react-redux";
+
 
 const router = createBrowserRouter([
   {
@@ -13,8 +16,8 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       {
-      path: "register",
-      element: <Register />
+        path: "register",
+        element: <Register />
       },
       {
         path: "login",
@@ -24,15 +27,18 @@ const router = createBrowserRouter([
         path: "dashboard",
         element: <Dashboard />
       }
-    
+
     ]
   },
-  
+
 ])
 
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+
+      <RouterProvider router={router} />
+    </Provider>
   </StrictMode>,
 )

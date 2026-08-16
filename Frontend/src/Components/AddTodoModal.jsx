@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 
-const AddTodoModal = ({ onClose }) => {
+const AddTodoModal = ({ onClose, onTodoCreated }) => {
   const [todo, SetTodo] = useState({
     title: "",
     description: "",
@@ -20,6 +20,7 @@ const AddTodoModal = ({ onClose }) => {
       })
       console.log(res)
       if(res.data.success){
+        await onTodoCreated()
         onClose();
       }
     } catch (error) {

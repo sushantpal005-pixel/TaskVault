@@ -1,18 +1,36 @@
-
-
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import Navbar from "../Components/Navbar";
 import TodoStats from "../Components/TodoStats";
 import TodoCard from "../Components/TodoCard";
 import AddTodoModal from "../Components/AddTodoModal";
 import EditTodoModal from "../Components/EditTodoModal";
+import { useDispatch, useSelector } from 'react-redux'
+import { setTodos } from "../Redux/todoSlice";
 
 const Dashboard = () => {
-  const [todos] = useState([]);
+  const todos = useSelector((state) => state.todo.todos)
   const [isAddTodoModal, setIsAddTodoModal] = useState(false)
   const [isEditTodoModal, setIsEditTodoModal] = useState(false)
   const [selectedTodo, setSelectedTodo] = useState(null)
+  const dispatch = useDispatch()
 
+  const getTodos = async () => {
+    try {
+      const res = await axios.get(`http://localhost:8080/api/v1/todo/getTodos`, {
+        withCredentials: true
+      })
+      console.log(res.data);
+      if (res.data.success) {
+        dispatch(setTodos(res.data.todos));
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  useEffect(() => {
+    getTodos()
+  }, [])
 
   return (
     <div className="min-h-screen bg-slate-950 text-white">
@@ -84,7 +102,7 @@ const Dashboard = () => {
             >
               + Add Task
             </button>
-            
+
 
           </div>
 
@@ -106,13 +124,14 @@ const Dashboard = () => {
 
           <div className="divide-y divide-slate-800">
             {todos.map((todo) => (
-              <TodoCard 
-              key={todo.id} 
-              todo={todo} 
-              onEdit={() => {
-                setSelectedTodo(todo); 
-                setIsEditTodoModal(true)
-              }} />
+              <TodoCard
+                key={todo._id}
+                todo={todo}
+                onEdit={() => {
+                  setSelectedTodo(todo);
+                  setIsEditTodoModal(true)
+                }}
+               />
             ))}
           </div>
 
@@ -123,6 +142,7 @@ const Dashboard = () => {
       {isAddTodoModal && (
         <AddTodoModal
           onClose={() => setIsAddTodoModal(false)}
+          onTodoCreated={getTodos}
         />
       )}
 
@@ -133,7 +153,7 @@ const Dashboard = () => {
           onClose={() => setIsEditTodoModal(false)}
         />
       )}
-    
+
     </div>
   );
 };

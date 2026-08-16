@@ -1,4 +1,21 @@
+import { useState } from "react";
+import { updateTodoApi } from "../Api/todoApi";
+import { useDispatch } from "react-redux";
+import { updateTodo } from "../Redux/todoSlice";
+
 const TodoCard = ({ todo, onEdit }) => {
+  const dispatch = useDispatch()
+
+  const handleToggle = async () => {
+    const res = await updateTodoApi(todo._id, {
+      title: todo.title,
+      description: todo.description,
+      isCompleted: !todo.isCompleted
+    });
+    if(res.success){
+      dispatch(updateTodo(res.updatedTodo))
+    }
+  }
   return (
     <div className="p-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 hover:bg-slate-800/40 transition">
 
@@ -9,7 +26,7 @@ const TodoCard = ({ todo, onEdit }) => {
         <input
           type="checkbox"
           checked={todo.isCompleted}
-          readOnly
+          onChange={handleToggle}
           className="mt-1 w-5 h-5 accent-indigo-600 cursor-pointer"
         />
 
