@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { updateTodoApi } from "../Api/todoApi";
 import { useDispatch } from "react-redux";
-import { updateTodo } from "../Redux/todoSlice";
+import { updateTodo, deleteTodo } from "../Redux/todoSlice";
+import axios from "axios";
 
 const TodoCard = ({ todo, onEdit }) => {
   const dispatch = useDispatch()
@@ -12,8 +13,22 @@ const TodoCard = ({ todo, onEdit }) => {
       description: todo.description,
       isCompleted: !todo.isCompleted
     });
-    if(res.success){
+    if (res.success) {
       dispatch(updateTodo(res.updatedTodo))
+    }
+  }
+
+  const handleDelete = async () => {
+    const res = await axios.delete(`http://localhost:8080/api/v1/todo/delete/${todo._id}`, {
+
+      withCredentials: true,
+
+    })
+    console.log(res)
+    if (res.data.success) {
+      dispatch(deleteTodo(todo._id))
+      //console.log(res)
+      console.log("todo deleted")
     }
   }
   return (
@@ -34,11 +49,10 @@ const TodoCard = ({ todo, onEdit }) => {
         <div className="min-w-0">
 
           <h4
-            className={`font-medium break-words ${
-              todo.isCompleted
+            className={`font-medium break-words ${todo.isCompleted
                 ? "line-through text-slate-500"
                 : "text-white"
-            }`}
+              }`}
           >
             {todo.title}
           </h4>
@@ -64,6 +78,7 @@ const TodoCard = ({ todo, onEdit }) => {
 
         <button
           type="button"
+          onClick={handleDelete}
           className="px-3 py-2 text-sm border border-red-900/50 rounded-lg text-red-400 hover:bg-red-950/40 transition"
         >
           Delete
