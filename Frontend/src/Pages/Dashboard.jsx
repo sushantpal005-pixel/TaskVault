@@ -14,6 +14,21 @@ const Dashboard = () => {
   const [isEditTodoModal, setIsEditTodoModal] = useState(false)
   const [selectedTodo, setSelectedTodo] = useState(null)
   const dispatch = useDispatch()
+  const [searchText, setSearchText] = useState("")
+  const [filter, setFilter] = useState("all")
+  
+  const filteredTodos = todos.filter((todo) => {
+  const matchesSearch = todo.title
+    .toLowerCase()
+    .includes(searchText.toLowerCase());
+
+  const matchesFilter =
+    filter === "all" ||
+    (filter === "pending" && todo.isCompleted === false) ||
+    (filter === "completed" && todo.isCompleted === true);
+
+  return matchesSearch && matchesFilter;
+});
 
   const getTodos = async () => {
     try {
@@ -79,6 +94,7 @@ const Dashboard = () => {
               <input
                 type="text"
                 placeholder="Search tasks..."
+                onChange={(e) => setSearchText(e.target.value)}
                 className="w-full bg-slate-900 border border-slate-800 rounded-lg pl-10 pr-3 py-2.5 text-sm text-white placeholder-slate-500 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition"
               />
 
@@ -86,7 +102,7 @@ const Dashboard = () => {
 
             {/* Filter */}
             <select
-              defaultValue="all"
+              onChange={(e) => setFilter(e.target.value)}
               className="bg-slate-900 border border-slate-800 rounded-lg px-3 py-2.5 text-sm text-slate-300 outline-none focus:border-indigo-500 cursor-pointer"
             >
               <option value="all">All Tasks</option>
@@ -123,7 +139,7 @@ const Dashboard = () => {
           </div>
 
           <div className="divide-y divide-slate-800">
-            {todos.map((todo) => (
+            {filteredTodos.map((todo) => (
               <TodoCard
                 key={todo._id}
                 todo={todo}
@@ -131,7 +147,7 @@ const Dashboard = () => {
                   setSelectedTodo(todo);
                   setIsEditTodoModal(true)
                 }}
-               />
+              />
             ))}
           </div>
 
