@@ -16,19 +16,19 @@ const Dashboard = () => {
   const dispatch = useDispatch()
   const [searchText, setSearchText] = useState("")
   const [filter, setFilter] = useState("all")
-  
+
   const filteredTodos = todos.filter((todo) => {
-  const matchesSearch = todo.title
-    .toLowerCase()
-    .includes(searchText.toLowerCase());
+    const matchesSearch = todo.title
+      .toLowerCase()
+      .includes(searchText.toLowerCase());
 
-  const matchesFilter =
-    filter === "all" ||
-    (filter === "pending" && todo.isCompleted === false) ||
-    (filter === "completed" && todo.isCompleted === true);
+    const matchesFilter =
+      filter === "all" ||
+      (filter === "pending" && todo.isCompleted === false) ||
+      (filter === "completed" && todo.isCompleted === true);
 
-  return matchesSearch && matchesFilter;
-});
+    return matchesSearch && matchesFilter;
+  });
 
   const getTodos = async () => {
     try {
@@ -139,16 +139,28 @@ const Dashboard = () => {
           </div>
 
           <div className="divide-y divide-slate-800">
-            {filteredTodos.map((todo) => (
-              <TodoCard
-                key={todo._id}
-                todo={todo}
-                onEdit={() => {
-                  setSelectedTodo(todo);
-                  setIsEditTodoModal(true)
-                }}
-              />
-            ))}
+            {
+              filteredTodos.length > 0 ? (
+                filteredTodos.map((todo) => (
+                  <TodoCard
+                    key={todo._id}
+                    todo={todo}
+                    onEdit={() => {
+                      setSelectedTodo(todo);
+                      setIsEditTodoModal(true)
+                    }}
+                  />
+                ))
+              ) : (
+                <div className="p-10 text-center">
+                  <p className="text-slate-400 text-lg">
+                    No tasks found
+                  </p>
+                  
+                </div>
+              )
+            }
+
           </div>
 
         </div>

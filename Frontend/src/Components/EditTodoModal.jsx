@@ -2,6 +2,7 @@ import { useState } from "react";
 import { updateTodoApi } from "../Api/todoApi";
 import { useDispatch } from "react-redux";
 import { updateTodo } from "../Redux/todoSlice";
+import { toast } from "sonner";
 
 const EditTodoModal = ({todo, onClose }) => {
   const [formData, setFormData] = useState({
@@ -17,10 +18,12 @@ const EditTodoModal = ({todo, onClose }) => {
       const res = await updateTodoApi(todo._id, formData);
       console.log(res)
       if(res.success){
+        toast.success("Todo updated successfully")
         dispatch(updateTodo(res.updatedTodo))
         onClose()
       }
     } catch (error) {
+      toast.error("Failed to update todo")
       console.log(error)
     }
   }

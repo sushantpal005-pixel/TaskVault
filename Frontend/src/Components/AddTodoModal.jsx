@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import { toast } from "sonner";
 
 const AddTodoModal = ({ onClose, onTodoCreated }) => {
   const [todo, SetTodo] = useState({
@@ -20,10 +21,12 @@ const AddTodoModal = ({ onClose, onTodoCreated }) => {
       })
       console.log(res)
       if(res.data.success){
+        toast.success("Todo created successfully")
         await onTodoCreated()
         onClose();
       }
     } catch (error) {
+      toast.error("Failed to create todo")
       console.log(error)
     }
 

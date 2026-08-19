@@ -93,7 +93,7 @@ export const login = async (req, res) => {
 
 export const logout = async (req, res) => {
     try {
-        return res.status(200).cookie(token, "", {maxAge :'0'}).json({
+        return res.status(200).cookie("token", "", {maxAge :'0'}).json({
             message: "Logout successfully",
             success: true
         })
@@ -104,3 +104,17 @@ export const logout = async (req, res) => {
         })
     }
 }
+
+export const getProfile = async (req, res) => {
+    try {
+        return res.status(200).json({
+            success: true,
+            user: req.user,
+        });
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: "Failed to fetch profile",
+        });
+    }
+};

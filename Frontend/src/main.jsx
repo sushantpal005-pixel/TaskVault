@@ -8,7 +8,8 @@ import Layout from './Layout.jsx'
 import Dashboard from './Pages/DashBoard.jsx'
 import { store } from './Redux/store.js'
 import { Provider } from "react-redux";
-
+import { Toaster } from "sonner";
+import ProtectedRoute from "./Components/ProtectedRoute.jsx";
 
 const router = createBrowserRouter([
   {
@@ -16,7 +17,7 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       {
-        path: "register",
+        path: "",
         element: <Register />
       },
       {
@@ -24,8 +25,15 @@ const router = createBrowserRouter([
         element: <Login />
       },
       {
-        path: "dashboard",
-        element: <Dashboard />
+        element: <ProtectedRoute />,
+        children: [
+          {
+            path: "dashboard",
+            element: <Dashboard />
+          }
+        ]
+
+        
       }
 
     ]
@@ -37,7 +45,7 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Provider store={store}>
-
+      <Toaster position="top-right" richColors />
       <RouterProvider router={router} />
     </Provider>
   </StrictMode>,

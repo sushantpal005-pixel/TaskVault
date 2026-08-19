@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 const Login = () => {
     const [user, setUser] = useState({
@@ -21,9 +22,11 @@ const Login = () => {
             })
             console.log(res)
             if(res.data.success){
-                navigate("/Dashboard")
+              toast.success("Login successful")
+              navigate("/dashboard")
             }
         } catch (error) {
+          toast.error("Login failed")
             console.log(error)
         }
     }
@@ -108,7 +111,7 @@ const Login = () => {
           <p className="text-center text-sm text-slate-400 mt-6">
             Don't have an account?{" "}
             <Link
-              to="/register"
+              to="/"
               className="text-indigo-400 hover:text-indigo-300 font-medium"
             >
               Create account

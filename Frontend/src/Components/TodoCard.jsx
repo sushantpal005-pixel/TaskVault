@@ -3,6 +3,7 @@ import { updateTodoApi } from "../Api/todoApi";
 import { useDispatch } from "react-redux";
 import { updateTodo, deleteTodo } from "../Redux/todoSlice";
 import axios from "axios";
+import { toast } from "sonner";
 
 const TodoCard = ({ todo, onEdit }) => {
   const dispatch = useDispatch()
@@ -19,17 +20,21 @@ const TodoCard = ({ todo, onEdit }) => {
   }
 
   const handleDelete = async () => {
-    const res = await axios.delete(`http://localhost:8080/api/v1/todo/delete/${todo._id}`, {
+    try {
+      const res = await axios.delete(`http://localhost:8080/api/v1/todo/delete/${todo._id}`, {
 
-      withCredentials: true,
+        withCredentials: true,
 
-    })
-    console.log(res)
-    if (res.data.success) {
-      dispatch(deleteTodo(todo._id))
-      //console.log(res)
-      console.log("todo deleted")
+      })
+      console.log(res)
+      if (res.data.success) {
+        toast.success("Todo deleted successfully")
+        dispatch(deleteTodo(todo._id))
+      }
+    } catch (error) {
+      toast.error("Failed to delete todo")
     }
+
   }
   return (
     <div className="p-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 hover:bg-slate-800/40 transition">
@@ -50,8 +55,8 @@ const TodoCard = ({ todo, onEdit }) => {
 
           <h4
             className={`font-medium break-words ${todo.isCompleted
-                ? "line-through text-slate-500"
-                : "text-white"
+              ? "line-through text-slate-500"
+              : "text-white"
               }`}
           >
             {todo.title}

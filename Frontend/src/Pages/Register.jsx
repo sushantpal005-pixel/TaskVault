@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios"
+import { toast } from "sonner";
 
 const Register = () => {
     const [user, setUser] = useState({
@@ -22,9 +23,11 @@ const Register = () => {
             })
             console.log(res)
             if(res.data.success){
+              toast.success("Account created successfully! Please login.")
                 navigate("/login")
             }
         } catch (error) {
+          toast.error("Registration failed")
             console.log(error)
         }
     }
