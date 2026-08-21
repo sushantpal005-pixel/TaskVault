@@ -28,8 +28,8 @@ const TodoCard = ({ todo, onEdit }) => {
       })
       console.log(res)
       if (res.data.success) {
-        toast.success("Todo deleted successfully")
-        dispatch(deleteTodo(todo._id))
+        toast.success("Todo deleted successfully");
+        dispatch(deleteTodo(todo._id));
       }
     } catch (error) {
       toast.error("Failed to delete todo")
