@@ -1,10 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
+import { setUser } from "../Redux/authSlice";
+import { useDispatch } from "react-redux";
 
 const ProtectedRoute = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const dispatch = useDispatch()
 
   useEffect(() => {
     const checkAuthentication = async () => {
@@ -18,6 +21,7 @@ const ProtectedRoute = () => {
 
         if (res.data.success) {
           setIsAuthenticated(true);
+          dispatch(setUser(res.data))
         }
       } catch (error) {
         setIsAuthenticated(false);

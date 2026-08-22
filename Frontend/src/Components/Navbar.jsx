@@ -1,9 +1,12 @@
 import axios from "axios";
+import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const user = useSelector((state) => state.user)
+  
   const logoutHandler = async () => {
     try {
       const res = await axios.get(`http://localhost:8080/api/v1/user/logout`, { withCredentials: true })
@@ -27,8 +30,8 @@ const Navbar = () => {
           </Link>
 
           <div className="flex items-center gap-4">
-            <span className="hidden sm:block text-sm text-slate-400">
-              Welcome back, Sushant
+            <span className=" sm:block text-sm text-slate-400">
+              Welcome back, {user.user.user.fullName}
             </span>
 
             <button onClick={logoutHandler} className="px-4 py-2 text-sm font-medium text-slate-300 border border-slate-700 rounded-lg hover:bg-slate-800 transition">

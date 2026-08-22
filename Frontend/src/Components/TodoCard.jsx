@@ -15,7 +15,7 @@ const TodoCard = ({ todo, onEdit }) => {
       isCompleted: !todo.isCompleted
     });
     if (res.success) {
-      dispatch(updateTodo(res.updatedTodo))
+      dispatch(updateTodo(res.updatedTodo));
     }
   }
 
