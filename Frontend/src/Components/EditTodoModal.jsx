@@ -16,7 +16,7 @@ const EditTodoModal = ({todo, onClose }) => {
     e.preventDefault()
     try {
       const res = await updateTodoApi(todo._id, formData);
-      console.log(res)
+      
       if(res.success){
         toast.success("Todo updated successfully")
         dispatch(updateTodo(res.updatedTodo))

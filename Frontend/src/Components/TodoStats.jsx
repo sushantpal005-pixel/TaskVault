@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 
 const TodoStats = () => {
   const todos = useSelector((state) => state.todo.todos);
-  console.log(todos)
+  
   const completedTodos = todos.filter((todo) => todo.isCompleted);
   const pendingTodos = todos.filter((todo) => !todo.isCompleted);
   return (

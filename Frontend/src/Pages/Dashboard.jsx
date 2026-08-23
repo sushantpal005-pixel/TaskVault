@@ -16,6 +16,7 @@ const Dashboard = () => {
   const dispatch = useDispatch()
   const [searchText, setSearchText] = useState("")
   const [filter, setFilter] = useState("all")
+  const [isLoading, setIsLoading] = useState(true)
 
   const filteredTodos = todos.filter((todo) => {
     const matchesSearch = todo.title
@@ -35,12 +36,14 @@ const Dashboard = () => {
       const res = await axios.get(`http://localhost:8080/api/v1/todo/getTodos`, {
         withCredentials: true
       })
-      console.log(res.data);
+      
       if (res.data.success) {
         dispatch(setTodos(res.data.todos));
       }
     } catch (error) {
       console.log(error)
+    } finally {
+      setIsLoading(false)
     }
   }
   useEffect(() => {
@@ -140,24 +143,32 @@ const Dashboard = () => {
 
           <div className="divide-y divide-slate-800">
             {
-              filteredTodos.length > 0 ? (
-                filteredTodos.map((todo) => (
-                  <TodoCard
-                    key={todo._id}
-                    todo={todo}
-                    onEdit={() => {
-                      setSelectedTodo(todo);
-                      setIsEditTodoModal(true)
-                    }}
-                  />
-                ))
-              ) : (
-                <div className="p-10 text-center">
-                  <p className="text-slate-400 text-lg">
-                    No tasks found
-                  </p>
-                  
-                </div>
+              isLoading ? (<div className="p-10 text-center">
+                <p className="text-slate-400 text-lg">
+                  Loading your Todos
+                </p>
+
+              </div>) : (
+                filteredTodos.length > 0 ? (
+                  filteredTodos.map((todo) => (
+                    <TodoCard
+                      key={todo._id}
+                      todo={todo}
+                      onEdit={() => {
+                        setSelectedTodo(todo);
+                        setIsEditTodoModal(true)
+                      }}
+                    />
+                  ))
+                ) : (
+                  <div className="p-10 text-center">
+                    <p className="text-slate-400 text-lg">
+                      No tasks found
+                    </p>
+
+                  </div>
+                )
+
               )
             }
 

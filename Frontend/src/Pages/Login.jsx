@@ -13,14 +13,14 @@ const Login = () => {
     const handleSubmit = async(e) => {
         e.preventDefault()
         try {
-            console.log(user)
+            
             const res = await axios.post(`http://localhost:8080/api/v1/user/login`, user, {
                 headers: {
                     "Content-Type": "application/json"
                 },
                 withCredentials: true
             })
-            console.log(res)
+            
             if(res.data.success){
               toast.success("Login successful")
               navigate("/dashboard")

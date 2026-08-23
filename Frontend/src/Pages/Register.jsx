@@ -13,7 +13,7 @@ const Register = () => {
     
     const handleSubmit = async (e) => {
         e.preventDefault()
-        console.log(user)
+        
         try {
             const res = await axios.post(`http://localhost:8080/api/v1/user/register`, user, {
                 headers: {
@@ -21,7 +21,7 @@ const Register = () => {
                 },
                 withCredentials: true
             })
-            console.log(res)
+            
             if(res.data.success){
               toast.success("Account created successfully! Please login.")
                 navigate("/login")

@@ -11,7 +11,6 @@ const AddTodoModal = ({ onClose, onTodoCreated }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(todo);
     try {
       const res = await axios.post(`http://localhost:8080/api/v1/todo/create`, todo, {
         headers: {
@@ -19,7 +18,7 @@ const AddTodoModal = ({ onClose, onTodoCreated }) => {
         },
         withCredentials: true
       })
-      console.log(res)
+      
       if(res.data.success){
         toast.success("Todo created successfully")
         await onTodoCreated()
