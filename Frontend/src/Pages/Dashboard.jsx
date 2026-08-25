@@ -145,7 +145,7 @@ const Dashboard = () => {
             {
               isLoading ? (<div className="p-10 text-center">
                 <p className="text-slate-400 text-lg">
-                  Loading your Todos
+                  Loading your Tasks
                 </p>
 
               </div>) : (

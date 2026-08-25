@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "axios"
 
 export const updateTodoApi = async (id, todoData) => {
     const response = await axios.put(
