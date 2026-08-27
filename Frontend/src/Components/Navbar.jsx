@@ -11,7 +11,7 @@ const Navbar = () => {
 
   const logoutHandler = async () => {
     try {
-      const res = await axios.get(`http://localhost:8080/api/v1/user/logout`, { withCredentials: true })
+      const res = await axios.get(`https://taskvault-q0fl.onrender.com/api/v1/user/logout`, { withCredentials: true })
       if (res.data.success) {
         dispatch(setUser(null))
         toast.success("Logout successfully")

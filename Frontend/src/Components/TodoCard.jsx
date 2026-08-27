@@ -21,7 +21,7 @@ const TodoCard = ({ todo, onEdit }) => {
 
   const handleDelete = async () => {
     try {
-      const res = await axios.delete(`http://localhost:8080/api/v1/todo/delete/${todo._id}`, {
+      const res = await axios.delete(`https://taskvault-q0fl.onrender.com/api/v1/todo/delete/${todo._id}`, {
 
         withCredentials: true,
 

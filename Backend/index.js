@@ -19,7 +19,7 @@ const _dirname = path.resolve()
 
 app.use(express.json());
 app.use(cookieParser())
-app.use(cors({origin:'http://localhost:8080', credentials: true}))
+app.use(cors({origin:'https://taskvault-q0fl.onrender.com', credentials: true}))
 
 app.use("/api/v1/user", userRoute)
 app.use("/api/v1/todo", todoRoute)

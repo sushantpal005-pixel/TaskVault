@@ -12,7 +12,7 @@ const AddTodoModal = ({ onClose, onTodoCreated }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`http://localhost:8080/api/v1/todo/create`, todo, {
+      const res = await axios.post(`https://taskvault-q0fl.onrender.com/api/v1/todo/create`, todo, {
         headers: {
           "Content-Type": "application/json",
         },
