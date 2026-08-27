@@ -2,7 +2,7 @@ import express from 'express'
 import dotenv from "dotenv"
 import userRoute from "./Routes/userRoute.js"
 import todoRoute from "./Routes/todoRoute.js"
-import connectDB from './config/db.js'
+import connectDB from './Config/db.js'
 import cookieParser from 'cookie-parser'
 import cors from "cors"
 import path from "path"

@@ -1,6 +1,6 @@
 import express from "express"
 import { isAuthenticated } from "../Middlewares/isAuthenticated.js"
-import { createTodo, deleteTodo, getTodo, getTodoById, updateTodo } from "../controllers/todoController.js"
+import { createTodo, deleteTodo, getTodo, getTodoById, updateTodo } from "../Controllers/todoController.js"
 
 
 const router = express.Router()
