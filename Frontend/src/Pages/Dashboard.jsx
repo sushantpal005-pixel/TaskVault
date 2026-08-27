@@ -9,14 +9,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setTodos } from "../Redux/todoSlice";
 
 const Dashboard = () => {
-  const todos = useSelector((state) => state.todo.todos)
-  const [isAddTodoModal, setIsAddTodoModal] = useState(false)
-  const [isEditTodoModal, setIsEditTodoModal] = useState(false)
-  const [selectedTodo, setSelectedTodo] = useState(null)
-  const dispatch = useDispatch()
-  const [searchText, setSearchText] = useState("")
-  const [filter, setFilter] = useState("all")
-  const [isLoading, setIsLoading] = useState(true)
+  const todos = useSelector((state) => state.todo.todos);
+  const [isAddTodoModal, setIsAddTodoModal] = useState(false);
+  const [isEditTodoModal, setIsEditTodoModal] = useState(false);
+  const [selectedTodo, setSelectedTodo] = useState(null);
+  const dispatch = useDispatch();
+  const [searchText, setSearchText] = useState("");
+  const [filter, setFilter] = useState("all");
+  const [isLoading, setIsLoading] = useState(true);
 
   const filteredTodos = todos.filter((todo) => {
     const matchesSearch = todo.title
