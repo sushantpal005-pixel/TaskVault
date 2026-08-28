@@ -14,11 +14,11 @@ const Navbar = () => {
       const res = await axios.get(`https://taskvault-q0fl.onrender.com/api/v1/user/logout`, { withCredentials: true })
       if (res.data.success) {
         dispatch(setUser(null))
-        toast.success("Logout successfully")
+        toast.success("Logout successfully.")
         navigate("/login")
       }
     } catch (error) {
-      toast.error("Logout failed")
+      toast.error("Logout failed.")
     }
   }
   return (
